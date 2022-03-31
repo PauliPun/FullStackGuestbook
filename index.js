@@ -91,7 +91,9 @@ app.post("/ajaxmessage", function (req, res) {
   });
   var message = req.body.message;
   res.send(
-    "Kiitos viestistäsi: " + message + " Viestisi löytyy nyt Guestbook-sivulta."
+    "Thank you for your message: " +
+      message +
+      " You can find your message in the Guestbook page."
   );
 });
 
