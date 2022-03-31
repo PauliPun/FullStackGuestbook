@@ -94,5 +94,5 @@ app.post("/ajaxmessage", function (req, res) {
 
 //Webserver
 app.listen(3001, function () {
-  console.log("Example app listening on port 3001!");
+  console.log("Listening on port 3001!");
 });
