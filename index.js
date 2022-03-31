@@ -1,3 +1,6 @@
+const PORT = process.env.PORT || 5000;
+var http = require("http");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 var fs = require("fs");
@@ -93,6 +96,6 @@ app.post("/ajaxmessage", function (req, res) {
 });
 
 //Webserver
-app.listen(3001, function () {
-  console.log("Listening on port 3001!");
+app.listen(PORT, function () {
+  console.log(`Listening on ${PORT}`);
 });
