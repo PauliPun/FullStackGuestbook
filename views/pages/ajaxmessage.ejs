@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/d59940b818.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="icon" href="images/logo1.jpg" type="image/jpg" sizes="16x16" />
+
+    <title>Guestbook</title>
+  </head>
+
+  <body class="bodywidth">
+    <!-- Navigation -->
+    <nav
+      id="nav"
+      class="
+        navbar navbar-expand-lg
+        fixed-top
+        navbar-light
+        bodywidth
+        bgnav
+        justify-content-center
+      "
+    >
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100" id="navbarNav">
+          <ul class="navbar-nav mt-2 w-100 justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="/">home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/guestbook">Guestbook</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/newmessage">New Message</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ajaxmessage">Ajax Message</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+
+    <div class="container background maxwidth">
+      <div class="row justify-content-center">
+        <div class="col col-lg-5 p-2 mt-5">
+          <p></p>
+          <h2>Leave Ajax Message!</h2>
+          <p></p>
+
+          <form name="ajaxForm" method="POST" action="/ajaxmessage">
+            <div class="form-group pt-5">
+              <label for="inputName">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="name.."
+                name="name"
+                required
+              />
+            </div>
+            <div class="form-group pt-2">
+              <label for="inputCountry">Country</label>
+              <input
+                type="text"
+                class="form-control"
+                id="country"
+                placeholder="where are you from.."
+                name="country"
+                required
+              />
+            </div>
+            <div class="form-group pt-2">
+              <label for="inputText">Leave a message</label>
+              <textarea
+                class="form-control"
+                id="message"
+                rows="3"
+                name="message"
+                required
+              ></textarea>
+            </div>
+            <div class="col-auto my-1 pt-2 text-center">
+              <button type="button" id="btnSubmit" class="btn btn-light">
+                Submit
+              </button>
+            </div>
+          </form>
+          <div id="ajaxMessages"></div>
+        </div>
+
+        <!-- Footer -->
+
+        <footer class="container-fluid">
+          <div class="row justify-content-md-center fixed-bottom bgfooter">
+            <div class="col col-md-5 text-center p-3">
+              <i class="far fa-copyright"></i> 2022 Pauliina
+            </div>
+          </div>
+        </footer>
+
+        <!-- JavaScript code -->
+        <script>
+          window.onload = (event) => {
+            var submitButton = document.getElementById("btnSubmit");
+
+            // Eventlistener for button, retrieves all information from the form
+            submitButton.addEventListener("click", () => {
+              var name = document.getElementById("name").value;
+              var country = document.getElementById("country").value;
+              var message = document.getElementById("message").value;
+              // Validation
+              if (name === "" || country === "" || message === "") {
+                alert("Don't leave empty fields!");
+                return;
+              }
+
+              // AJAX object, puts the information and message in div called ajaxMessages
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("ajaxMessages").innerHTML =
+                    this.responseText;
+                }
+              };
+
+              // Sends an AJAX request that includes the information from the form
+              xmlhttp.open("POST", "/ajaxmessage", true);
+              xmlhttp.setRequestHeader("Content-type", "application/json");
+
+              // data variables
+              var data = {
+                name: name,
+                country: country,
+                message: message,
+              };
+              // send data as string
+              xmlhttp.send(JSON.stringify(data));
+            });
+          };
+        </script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+          integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+          integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+          crossorigin="anonymous"
+        ></script>
+      </div>
+    </div>
+  </body>
+</html>
